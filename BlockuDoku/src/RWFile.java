@@ -10,27 +10,30 @@ public class RWFile {
         gameScores = new GameScores();
     }
 
-    public void readRankingsFile(){
-        System.out.println("-_-_-_-_-_-_-_ Rankings -_-_-_-_-_-_-_");
+    public void readRankingsFile(String filename){
         try {
-            File file = new File("files/rankings.txt");
+            File file = new File(filename);
 
             Scanner myReader = new Scanner(file);
 
             while (myReader.hasNextLine()) {
                 Player player = new Player();
-                int score;
                 LocalDateTime date;
 
                 String info = myReader.nextLine();
+
                 String[] values = info.split(";");
                 player.setNickName(values[0].replace("\"", "").trim());
-                values[1] = values[1].replace("\"", "").trim();
-                values[2] = values[2].replace("\"", "").trim();
+                player.setScore(Integer.parseInt(values[1].replace("\"", "").trim()));
+                date = LocalDateTime.parse(values[2].replace("\"", "").trim());
+
+                if(filename.equalsIgnoreCase("rankings.txt")){
+                    gameScores.addScoreRankingsList(player,date);
+                }else{
+                    gameScores.addPersonalScoreList(player,date);
+                }
 
 
-
-                gameScores.addScoresList();
             }
             myReader.close();
         } catch (FileNotFoundException e) {
@@ -40,9 +43,9 @@ public class RWFile {
     }
     public void showRankings(){
 
-        for(String data: rankingsList){
+        /*for(String data: rankingsList){
 
-        }
+        }*/
 
     }
 }
