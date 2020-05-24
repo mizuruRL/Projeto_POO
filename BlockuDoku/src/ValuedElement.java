@@ -1,10 +1,11 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 public class ValuedElement<E> {
 
     private E e;
-    private LocalDateTime date;
+    private LocalDate date;
 
-    public ValuedElement(E e, LocalDateTime date){
+    public ValuedElement(E e, LocalDate date){
             this.e = e;
             this.date = date;
     }
@@ -13,7 +14,7 @@ public class ValuedElement<E> {
         return e;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 

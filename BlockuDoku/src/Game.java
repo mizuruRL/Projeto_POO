@@ -12,6 +12,7 @@ public class Game
     String choise;
     Scanner scan = new Scanner(System.in);
     RWFile fileRW;
+    private GameScores gameScores;
 
     public Game()
     {
@@ -19,6 +20,7 @@ public class Game
         choise = "";
         gameStop = false;
         fileRW = new RWFile();
+        gameScores = new GameScores();
     }
 
     public boolean usernameIsValid(String username){
@@ -29,7 +31,7 @@ public class Game
         return result;
     }
     public void gameStart(){
-        System.out.println("Write your username\n>");
+        System.out.println("Write your username >");
         String tempUser = scan.next();
         if(usernameIsValid(tempUser)){
             username = tempUser;
@@ -80,7 +82,8 @@ public class Game
     }
 
     public void showRankings(){
-        fileRW.readRankingsFile();
+        fileRW.readRankingsFile("files/rankings.txt");
+        gameScores.printScoreRanking();
     }
 }
 

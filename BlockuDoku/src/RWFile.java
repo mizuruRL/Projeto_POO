@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -18,16 +20,20 @@ public class RWFile {
 
             while (myReader.hasNextLine()) {
                 Player player = new Player();
-                LocalDateTime date;
+                LocalDate date;
 
                 String info = myReader.nextLine();
 
                 String[] values = info.split(";");
                 player.setNickName(values[0].replace("\"", "").trim());
                 player.setScore(Integer.parseInt(values[1].replace("\"", "").trim()));
-                date = LocalDateTime.parse(values[2].replace("\"", "").trim());
 
-                if(filename.equalsIgnoreCase("rankings.txt")){
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                date = LocalDate.parse(values[2].replace("\"", "").trim(),formatter);
+
+                gameScores.addScoreRankingsList(player,date);
+                if(filename.equalsIgnoreCase("files/rankings.txt")){
+                    System.out.println("ok");
                     gameScores.addScoreRankingsList(player,date);
                 }else{
                     gameScores.addPersonalScoreList(player,date);
