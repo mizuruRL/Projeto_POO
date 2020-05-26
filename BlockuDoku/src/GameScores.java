@@ -16,20 +16,22 @@ public class GameScores {
 
     public void addScoreRankingsList(Player player, LocalDate date){
         val = new ValuedElement(player, date);
-        //scoreRankings.addFirst(val);
-        scoreRankings.add(val);
+        //teste
+        ValuedElement val1 = new ValuedElement(new Player("t"), date);
+        scoreRankings.push(val1);
     }
 
     public void addPersonalScoreList(Player player, LocalDate date){
         val = new ValuedElement(player, date);
-        personalScores.addFirst(val);
+        personalScores.add(val);
     }
 
     public void sortGamesScores(){
-
+        //Collections.sort();
     }
 
     public void printScoreRanking(){
+
         System.out.println("-_-_-_-_-_-_-_ Rankings -_-_-_-_-_-_-_");
         System.out.println("Linked list : " + scoreRankings);
         for(ValuedElement<Player> val: scoreRankings){

@@ -13,6 +13,7 @@ public class Game
     Scanner scan = new Scanner(System.in);
     RWFile fileRW;
     private GameScores gameScores;
+    GameBoard gameBoard;
 
     public Game()
     {
@@ -21,6 +22,7 @@ public class Game
         gameStop = false;
         fileRW = new RWFile();
         gameScores = new GameScores();
+        gameBoard = new GameBoard();
     }
 
     public boolean usernameIsValid(String username){
@@ -73,7 +75,7 @@ public class Game
 
             switch(choise){
                 case "0": menu();break;
-                case "1": ;break;
+                case "1": basicGameModeStart();break;
                 case "2": ;break;
                 default: System.out.println("Invalid Option");
             }
@@ -84,6 +86,10 @@ public class Game
     public void showRankings(){
         fileRW.readRankingsFile("files/rankings.txt");
         gameScores.printScoreRanking();
+    }
+
+    public void basicGameModeStart(){
+        gameBoard.showBoard();
     }
 }
 
