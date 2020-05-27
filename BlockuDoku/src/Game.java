@@ -43,9 +43,9 @@ public class Game
     }
 
     public void menu(){
-        System.out.println("1 – Iniciar novo jogo\n" +
-                "2 – Abrir jogo\n" +
-                "3 – Mostrar pontuações pessoais\n" +
+        System.out.println("1 – Start new Game\n" +
+                "2 – Load Game\n" +
+                "3 – Personal Scores\n" +
                 "4 – Ranking (TOP 10)\n" +
                 "0 – Sair");
         do{
@@ -65,8 +65,8 @@ public class Game
     }
 
     public void newGame(){
-        System.out.println("1 – Iniciar novo jogo – modo básico\n" +
-                "2 – Iniciar novo jogo – modo avançado\n" +
+        System.out.println("1 – Start new Game – Basic Mode\n" +
+                "2 – Start new Game – Advanced Mode\n" +
                 "0 - Voltar");
         System.out.println("Olá <" + username + ">\n\n");
         do{
