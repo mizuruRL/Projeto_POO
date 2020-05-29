@@ -8,7 +8,11 @@
 public class app
 {
     public static void main(String[] args){
-        Game game = new Game();
+        /*Game game = new Game();
         game.gameStart();
+        Block block = new Block();
+        block.createPlayableBlocksBoard(GameMode.BASICMODE);
+        block.printPlayableBlocksBoard();*/
+
     }
 }

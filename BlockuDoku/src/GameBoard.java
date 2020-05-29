@@ -2,9 +2,11 @@ import java.util.ArrayList;
 
 public class GameBoard {
     private GameMode gameMode;
+    GameScores gameScores;
     char board[][];
 
     public GameBoard() {
+        gameScores = new GameScores();
         board = new char[9][9];
         for (int i = 0; i < 9; i++) {
             for (int k = 0; k < 9; k++) {
@@ -88,7 +90,7 @@ public class GameBoard {
                     boardLineColumnAchievement(x,y);
                 }
             }
-            statsPoints.addPoints(36);
+            //gameScores.addPoints(36);
             result = true;
         }
         return  result;
@@ -113,7 +115,7 @@ public class GameBoard {
                     }
                 }
             }
-            statsPoints.addPoints(36);
+            //gameScores.addPoints(36);
             result = true;
         }
         return  result;

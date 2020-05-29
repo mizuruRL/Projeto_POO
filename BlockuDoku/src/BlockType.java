@@ -1,98 +1,124 @@
+import java.util.ArrayList;
+import java.util.Random;
+
 public enum BlockType {
     I, Q, T, L, J, S, Z, I1, I2, I3, Lm, LM, TE, QE;
 
     char content[][];
 
     BlockType() {
-        this.content = new char[3][3];
+        this.content = new char[4][4];
     }
 
-    public char[][] getContent(BlockType type, GameMode mode){
-        if(mode == GameMode.BASICMODE){
-            switch(type){
+    public char[][] getContent(){
+            switch(this){
                 case I:  content[0][0] = '#';
-                         content[0][1] = '#';
-                         content[0][2] = '#';
-                         content[0][3] = '#';
+                         content[1][0] = '#';
+                         content[2][0] = '#';
+                         content[3][0] = '#';
                     break;
-                case Q:
+                case Q: content[0][0] = '#';
+                        content[0][1] = '#';
+                        content[1][0] = '#';
+                        content[1][1] = '#';
                     break;
-                case T:
+                case T: content[0][0] = '#';
+                        content[0][1] = '#';
+                        content[0][2] = '#';
+                        content[1][1] = '#';
                     break;
-                case L:
+                case L: content[0][0] = '#';
+                        content[1][0] = '#';
+                        content[2][0] = '#';
+                        content[2][1] = '#';
                     break;
-                case J:
+                case J: content[2][0] = '#';
+                        content[0][1] = '#';
+                        content[1][1] = '#';
+                        content[2][1] = '#';
                     break;
-                case S:
+                case S: content[1][0] = '#';
+                        content[0][1] = '#';
+                        content[1][1] = '#';
+                        content[0][2] = '#';
                     break;
-                case Z:
+                case Z: content[0][0] = '#';
+                        content[0][1] = '#';
+                        content[1][1] = '#';
+                        content[1][2] = '#';
                     break;
-            }
+
+                case I1:    content[0][0] = '#';
+                    break;
+                case I2:    content[0][0] = '#';
+                            content[1][0] = '#';
+                    break;
+                case I3:    content[0][0] = '#';
+                            content[1][0] = '#';
+                            content[2][0] = '#';
+                    break;
+                case Lm:    content[0][0] = '#';
+                            content[1][0] = '#';
+                            content[1][1] = '#';
+                    break;
+                case LM:    content[0][0] = '#';
+                            content[1][0] = '#';
+                            content[2][0] = '#';
+                            content[2][1] = '#';
+                            content[2][2] = '#';
+                    break;
+                case TE:    content[0][0] = '#';
+                            content[0][1] = '#';
+                            content[0][2] = '#';
+                            content[1][1] = '#';
+                            content[2][1] = '#';
+
+                    break;
+                case QE:    content[0][0] = '#';
+                            content[1][0] = '#';
+                            content[2][0] = '#';
+                            content[0][1] = '#';
+                            content[1][1] = '#';
+                            content[2][1] = '#';
+                            content[0][2] = '#';
+                            content[1][2] = '#';
+                            content[2][2] = '#';
+                    break;
         }
         return content;
     }
+
 
     @Override
     public String toString() {
         String text = "Bloco ";
         switch (this) {
-            case I:  text += "I\n";printBlock();break;
-            case Q:  text += "Q\n";printBlock();break;
-            case T:  text += "T\n";printBlock();break;
-            case L:  text += "L\n";printBlock();break;
-            case J:  text += "J\n";printBlock();break;
-            case S:  text += "S\n";printBlock();break;
-            case Z:  text += "Z\n";printBlock();break;
-            case I1: text += "I1\n";printBlock();break;
-            case I2: text += "I2\n";printBlock();break;
-            case I3: text += "I3\n";printBlock();break;
-            case Lm: text += "L - mínimo\n";printBlock();break;
-            case LM: text += "L - máximo\n";printBlock();break;
-            case TE: text += "T Estendido\n";printBlock();break;
-            case QE: text += "Q Estendido\n";printBlock();break;
+            case I:  text += "I\n";printContent();break;
+            case Q:  text += "Q\n";printContent();break;
+            case T:  text += "T\n";printContent();break;
+            case L:  text += "L\n";printContent();break;
+            case J:  text += "J\n";printContent();break;
+            case S:  text += "S\n";printContent();break;
+            case Z:  text += "Z\n";printContent();break;
+            case I1: text += "I1\n";printContent();break;
+            case I2: text += "I2\n";printContent();break;
+            case I3: text += "I3\n";printContent();break;
+            case Lm: text += "L - mínimo\n";printContent();break;
+            case LM: text += "L - máximo\n";printContent();break;
+            case TE: text += "T Estendido\n";printContent();break;
+            case QE: text += "Q Estendido\n";printContent();break;
         }
         return text;
     }
 
-    public void printBlock(){
-        switch (this) {
-            case I:  System.out.println("#");System.out.println("#");System.out.println("#");System.out.println("#");
-            break;
-            case Q:  System.out.println("##");System.out.println("##");
-                break;
-            case T:  System.out.println("###");System.out.println(" # ");
-                break;
-            case L:  System.out.println("#");System.out.println("#");System.out.println("##");
-                break;
-            case J:  System.out.println(" #");System.out.println(" #");System.out.println("##");
-                break;
-            case S: System.out.println(" ##");System.out.println("## ");
-                break;
-            case Z:  System.out.println("##");System.out.println(" ##");
-                break;
-            case I1: System.out.println("#");
-                break;
-            case I2: System.out.println("#");System.out.println("#");
-                break;
-            case I3: System.out.println("#");System.out.println("#");System.out.println("#");
-                break;
-            case Lm: System.out.println("#");System.out.println("##");
-                break;
-            case LM: System.out.println("#");System.out.println("#");System.out.println("###");
-                break;
-            case TE: System.out.println("###");System.out.println(" # ");System.out.println(" # ");
-                break;
-            case QE: System.out.println("###");System.out.println("###");System.out.println("###");
-                ;break;
-        }
-    }
-
     public void printContent(){
+        content = getContent();
         for (int i = 0; i < content.length; i++) {
             for (int j = 0; j < content[i].length; j++) {
-                System.out.print(content[i][j]);
+                System.out.print(content[i][j] + " ");
             }
             System.out.println();
         }
     }
+
 }

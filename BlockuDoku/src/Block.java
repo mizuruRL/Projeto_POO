@@ -1,19 +1,26 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Block {
     BlockType type;
     Random random;
+    ArrayList<Block> playableBlocksList;
+    int randomNumber;
     public Block() {
         random = new Random();
+        playableBlocksList = new ArrayList<>();
+        randomNumber = 0;
     }
     public Block(BlockType type) {
         this.type = type;
         random = new Random();
+        playableBlocksList = new ArrayList<>();
+        randomNumber = 0;
     }
 
     public Block createRandomBlock(GameMode gamemode){
-        int randomNumber = random.nextInt(7) + 1;
-        Block block = new Block();
+        randomNumber = random.nextInt(7) + 1;
+        Block block = null;
         if(gamemode == GameMode.BASICMODE){
             switch(randomNumber){
                 case 1: block = new Block(BlockType.I);break;
@@ -36,5 +43,23 @@ public class Block {
             }
         }
         return block;
+    }
+
+    public void createPlayableBlocksBoard(GameMode gamemode){
+        for(int i = 0; i < 3; i++){
+            playableBlocksList.add(createRandomBlock(gamemode));
+        }
+    }
+
+    public void printPlayableBlocksBoard(){
+        System.out.println("Blocos a jogar:");
+        for(Block block : playableBlocksList){
+            System.out.println(block.toString());
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "" + type.toString();
     }
 }
