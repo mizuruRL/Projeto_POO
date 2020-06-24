@@ -1,48 +1,44 @@
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
-public class GameScores {
-    LinkedList<ValuedElement<Player>> scoreRankings;
-    LinkedList<ValuedElement<Player>> personalScores;
-    ValuedElement val;
+/**
+ * Class responsible for representing a score list in-game.
+ * @author André Dias (190221068) e Tomás Barroso (190221029)
+ * @version 1.0
+ */
+public class GameScores implements Serializable {
+    private List<Score> scores;
 
+    /**
+     * Constructor of class GameScores. Initializes score List.
+     */
     public GameScores() {
-        scoreRankings = new LinkedList<>();
-        personalScores = new LinkedList<>();
+        scores = new ArrayList<>();
     }
 
-    public void addScoreRankingsList(Player player, LocalDate date){
-        val = new ValuedElement(player, date);
-        //teste
-        ValuedElement val1 = new ValuedElement(new Player("t"), date);
-        scoreRankings.push(val1);
+    public void insertScore(Score s) {
+        scores.add(s);
     }
 
-    public void addPersonalScoreList(Player player, LocalDate date){
-        val = new ValuedElement(player, date);
-        personalScores.add(val);
+    public void sortRanks() {
+        Collections.sort(scores);
     }
 
-    public void sortGamesScores(){
-        //Collections.sort();
-    }
-
-    public void printScoreRanking(){
-
-        System.out.println("-_-_-_-_-_-_-_ Rankings -_-_-_-_-_-_-_");
-        System.out.println("Linked list : " + scoreRankings);
-        for(ValuedElement<Player> val: scoreRankings){
-            System.out.println(val.toString());
-
+    @Override
+    public String toString() {
+        StringBuilder info = new StringBuilder();
+        sortRanks();
+        int rank = 1;
+        for (Score score:scores) {
+            info.append(String.format("\n%d - %s", rank, score.toString()));
+            rank++;
         }
-    }
-    public void printPersonalScores(){
-        System.out.println("-_-_-_-_-_-_-_ Personal Scores -_-_-_-_-_-_-_");
-        for(ValuedElement<Player> val: personalScores){
-            val.toString();
+        while(rank<=10) {
+            info.append(String.format("\n%d - ", rank));
+            rank++;
         }
+        return info.toString();
     }
 }

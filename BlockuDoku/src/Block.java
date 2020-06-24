@@ -1,65 +1,68 @@
-import java.util.ArrayList;
-import java.util.Random;
+import java.io.Serializable;
+import java.util.Arrays;
 
-public class Block {
-    BlockType type;
-    Random random;
-    ArrayList<Block> playableBlocksList;
-    int randomNumber;
+/**
+ * Class responsible for representing a block in-game. Blocks are built on a 2 dimensional array of [rows][columns],
+ * depending on BlockType.
+ * @author André Dias (190221068) e Tomás Barroso (190221029)
+ * @version 1.0
+ */
+public abstract class Block implements Serializable {
+    boolean[][] content;
+
     public Block() {
-        random = new Random();
-        playableBlocksList = new ArrayList<>();
-        randomNumber = 0;
-    }
-    public Block(BlockType type) {
-        this.type = type;
-        random = new Random();
-        playableBlocksList = new ArrayList<>();
-        randomNumber = 0;
+        content = null;
     }
 
-    public Block createRandomBlock(GameMode gamemode){
-        randomNumber = random.nextInt(7) + 1;
-        Block block = null;
-        if(gamemode == GameMode.BASICMODE){
-            switch(randomNumber){
-                case 1: block = new Block(BlockType.I);break;
-                case 2: block = new Block(BlockType.Q);break;
-                case 3: block = new Block(BlockType.T);break;
-                case 4: block = new Block(BlockType.L);break;
-                case 5: block = new Block(BlockType.J);break;
-                case 6: block = new Block(BlockType.S);break;
-                case 7: block = new Block(BlockType.Z);break;
-            }
-        }else{
-            switch(randomNumber){
-                case 1: block = new Block(BlockType.I1);break;
-                case 2: block = new Block(BlockType.I2);break;
-                case 3: block = new Block(BlockType.I3);break;
-                case 4: block = new Block(BlockType.Lm);break;
-                case 5: block = new Block(BlockType.LM);break;
-                case 6: block = new Block(BlockType.TE);break;
-                case 7: block = new Block(BlockType.QE);break;
-            }
-        }
-        return block;
+    public void setContent(boolean[][] content) {
+        this.content = content;
     }
 
-    public void createPlayableBlocksBoard(GameMode gamemode){
-        for(int i = 0; i < 3; i++){
-            playableBlocksList.add(createRandomBlock(gamemode));
-        }
+    public boolean[][] getContent() {
+        return content;
     }
 
-    public void printPlayableBlocksBoard(){
-        System.out.println("Blocos a jogar:");
-        for(Block block : playableBlocksList){
-            System.out.println(block.toString());
-        }
+    public int getRowSize() {
+        return content.length;
+    }
+
+    public int getColumnSize() {
+        return content[0].length;
     }
 
     @Override
     public String toString() {
-        return "" + type.toString();
+        StringBuilder info = new StringBuilder();
+        for(boolean[] row : content) {
+            info.append(Arrays.toString(row)
+                    .replace(",", "")
+                    .replace("[", "")
+                    .replace("]", "")
+                    .replace("false", " ")
+                    .replace("true", "#")).append("\n");
+        }
+        return info + "\n";
     }
+
+    /**
+     * Method that rotates a block's content matrix by 90º.
+     */
+    public void rotateContent() {
+        int rowSize = getRowSize();
+        int columnSize = getColumnSize();
+        boolean[][] rotatedContent = new boolean[columnSize][rowSize];
+
+        for(int x = 0; x < rowSize; x++) {
+            for (int i = columnSize-1 , y = 0; i >= 0 && y < columnSize; i--, y++) {
+                rotatedContent[i][x] = content[x][y];
+            }
+        }
+        setContent(rotatedContent);
+    }
+
+    void fillContent(boolean val) {
+        for (boolean[] row: content)
+            Arrays.fill(row, val);
+    }
+
 }

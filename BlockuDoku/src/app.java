@@ -1,18 +1,15 @@
 
 /**
- * Escreva a descrição da classe app aqui.
+ * Main class that runs the app.
  *
- * @author (seu nome)
- * @version (número de versão ou data)
+ * @author André Dias (190221068) e Tomás Barroso (190221029)
+ * @version 1.0
  */
 public class app
 {
     public static void main(String[] args){
-        /*Game game = new Game();
-        game.gameStart();
-        Block block = new Block();
-        block.createPlayableBlocksBoard(GameMode.BASICMODE);
-        block.printPlayableBlocksBoard();*/
+        Game game = new Game();
+        game.start();
 
     }
 }

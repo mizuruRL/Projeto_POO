@@ -1,12 +1,17 @@
+/**
+ * Class responsible for handling the game types (difficulties).
+ * @author André Dias (190221068) e Tomás Barroso (190221029)
+ * @version 1.0
+ */
 public enum GameMode {
-    BASICMODE,ADVANCEDMODE;
+    BASIC,ADVANCED;
 
     @Override
     public String toString() {
         String text = "";
         switch(this){
-            case BASICMODE: text =  "Basic Mode";break;
-            case ADVANCEDMODE: text =  "Advanced Mode";break;
+            case BASIC: text =  "Basic Mode";break;
+            case ADVANCED: text =  "Advanced Mode";break;
         }
         return text;
     }
