@@ -19,6 +19,7 @@ public class Game implements Serializable
     private GameScores top10;
     private GameBoard gameBoard;
     private boolean exit;
+    private boolean newGame;
     private String[] values;
     private GameMode gameMode;
     private Player player;
@@ -40,6 +41,7 @@ public class Game implements Serializable
         random = new Random();
         scan = new Scanner(System.in);
         gameMode = null;
+        newGame = true;
         round = 1;
         moves = 3;
     }
@@ -117,6 +119,7 @@ public class Game implements Serializable
         moves = 3;
         exit = false;
         over = false;
+        newGame = true;
     }
 
     private void showRankings(){
@@ -130,7 +133,7 @@ public class Game implements Serializable
     private void gameSetup(){
         System.out.println(String.format("Round: %d | User: %s | Score: %d", round, player.getNickName(), player.getScore()));
         gameBoard.show();
-        printPlayableBlocksBoard();
+        printPlayableBlocks();
     }
 
     /**
@@ -159,7 +162,10 @@ public class Game implements Serializable
     private void play(){
         String command;
         boolean gameOver = false;
-        createPlayableBlocks(gameMode);
+        if(newGame) {
+            createPlayableBlocks(gameMode);
+            newGame = false;
+        }
         do{
             gameSetup();
              if(gameOver) {
@@ -247,7 +253,7 @@ public class Game implements Serializable
         Arrays.stream(playableBlocks, 0, 3).forEach(this::rotateBlock);
     }
 
-    private void printPlayableBlocksBoard(){
+    private void printPlayableBlocks(){
         System.out.println("\nBlocos a jogar:\n\n");
         char blockPos = 'A';
         for (Block block : playableBlocks) {
@@ -391,6 +397,7 @@ public class Game implements Serializable
             round = load.getRound();
             gameMode = load.getGameMode();
             moves = load.getMoves();
+            newGame = load.getNewGame();
             play();
         }
     }
@@ -429,6 +436,10 @@ public class Game implements Serializable
 
     public int getMoves() {
         return moves;
+    }
+
+    public boolean getNewGame() {
+        return newGame;
     }
 }
 
