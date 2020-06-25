@@ -1,4 +1,7 @@
 import static org.junit.Assert.*;
+
+import BlockGame.Game;
+import GameAssets.GameBoard;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
