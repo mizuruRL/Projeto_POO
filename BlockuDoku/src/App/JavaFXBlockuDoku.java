@@ -2,8 +2,16 @@ package App;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+
+import java.util.Optional;
 
 /**
  *
@@ -20,6 +28,19 @@ public class JavaFXBlockuDoku extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
 
+        /*primaryStage.setOnCloseRequest((event) -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Blocku Docku");
+            alert.setHeaderText("Quit game!");
+            alert.setContentText("Are you sure you want to quit the game?");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                Platform.exit();
+            } else {
+                alert.close();
+            }
+        });*/
     }
 
     /**

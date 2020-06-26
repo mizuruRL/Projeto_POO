@@ -28,6 +28,10 @@ public class Scores implements Serializable {
         Collections.sort(scores);
     }
 
+    public List<Score> getScores() {
+        return scores;
+    }
+
     @Override
     public String toString() {
         StringBuilder info = new StringBuilder();
