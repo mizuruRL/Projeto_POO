@@ -1,4 +1,4 @@
-package Blocks;
+package GameAssets.Blocks;
 
 public class IBlock extends Block{
 

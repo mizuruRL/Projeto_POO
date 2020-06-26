@@ -38,7 +38,7 @@ public class Player implements Comparable<Player>, Serializable {
 
     @Override
     public String toString() {
-        return "NickName=" + nickName + " | GameAssets.Score=" + score;
+        return "NickName=" + nickName + " | Score=" + score;
     }
 
     @Override

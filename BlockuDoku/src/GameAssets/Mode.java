@@ -5,7 +5,7 @@ package GameAssets;
  * @author André Dias (190221068) e Tomás Barroso (190221029)
  * @version 1.0
  */
-public enum GameMode {
+public enum Mode {
     BASIC,ADVANCED;
 
     @Override

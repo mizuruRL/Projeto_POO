@@ -1,4 +1,4 @@
-package Blocks;
+package GameAssets.Blocks;
 
 public class LMINBlock extends Block{
 	public LMINBlock() {

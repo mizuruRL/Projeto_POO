@@ -1,6 +1,6 @@
 package GameAssets;
 
-import Blocks.*;
+import GameAssets.Blocks.*;
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -10,11 +10,11 @@ import java.util.Arrays;
  * @author André Dias (190221068) e Tomás Barroso (190221029)
  * @version 1.0
  */
-public class GameBoard implements Serializable {
+public class Board implements Serializable {
     private int size;
     private boolean[][] board;
 
-    public GameBoard() {
+    public Board() {
         board = new boolean[9][9];
         size = board.length;
         for (boolean[] row: board)

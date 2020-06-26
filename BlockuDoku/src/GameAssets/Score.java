@@ -37,7 +37,7 @@ public class Score implements Comparable<Score>, Serializable {
 	public String toString() {
 		String score;
 		String formattedTime = getTimeStamp().format(DateTimeFormatter.ofPattern("d MMM uuuu HH:mm", Locale.ENGLISH));
-		score = String.format("%s  GameAssets.Score: %d | %s", player.getNickName(), player.getScore(), formattedTime);
+		score = String.format("%s  Score: %d | %s", player.getNickName(), player.getScore(), formattedTime);
 		return score;
 	}
 }

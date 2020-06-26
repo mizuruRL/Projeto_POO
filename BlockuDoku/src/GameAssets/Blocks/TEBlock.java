@@ -1,4 +1,4 @@
-package Blocks;
+package GameAssets.Blocks;
 
 public class TEBlock extends Block{
 	public TEBlock() {

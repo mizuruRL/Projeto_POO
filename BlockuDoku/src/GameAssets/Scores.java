@@ -10,13 +10,13 @@ import java.util.List;
  * @author André Dias (190221068) e Tomás Barroso (190221029)
  * @version 1.0
  */
-public class GameScores implements Serializable {
+public class Scores implements Serializable {
     private List<Score> scores;
 
     /**
      * Constructor of class GameAssets.GameScores. Initializes score List.
      */
-    public GameScores() {
+    public Scores() {
         scores = new ArrayList<>();
     }
 
