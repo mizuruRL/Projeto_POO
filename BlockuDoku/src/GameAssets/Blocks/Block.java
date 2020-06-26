@@ -1,4 +1,4 @@
-package Blocks;
+package GameAssets.Blocks;
 
 import java.io.Serializable;
 import java.util.Arrays;

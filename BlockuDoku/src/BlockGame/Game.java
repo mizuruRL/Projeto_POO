@@ -1,6 +1,6 @@
 package BlockGame;
 
-import Blocks.*;
+import GameAssets.Blocks.*;
 import FileHandler.RWFile;
 import GameAssets.*;
 
@@ -21,13 +21,13 @@ public class Game implements Serializable
     private boolean over;
     private String choice;
     private transient Scanner scan;
-    private GameScores personalScores;
-    private GameScores top10;
-    private GameBoard gameBoard;
+    private Scores personalScores;
+    private Scores top10;
+    private Board gameBoard;
     private boolean exit;
     private boolean newGame;
     private String[] values;
-    private GameMode gameMode;
+    private Mode gameMode;
     private Player player;
     private int round;
     private int moves;
@@ -41,8 +41,8 @@ public class Game implements Serializable
         choice = "";
         exit = false;
         over = false;
-        personalScores = new GameScores();
-        gameBoard = new GameBoard();
+        personalScores = new Scores();
+        gameBoard = new Board();
         playableBlocks = new Block[3];
         random = new Random();
         scan = new Scanner(System.in);
@@ -110,8 +110,8 @@ public class Game implements Serializable
 
             switch(choice){
                 case "0": menu();break;
-                case "1": reset();gameMode = GameMode.BASIC;play();break;
-                case "2": reset();gameMode = GameMode.ADVANCED;play();break;
+                case "1": reset();gameMode = Mode.BASIC;play();break;
+                case "2": reset();gameMode = Mode.ADVANCED;play();break;
                 default: System.out.println("Invalid Option");
             }
 
@@ -120,7 +120,7 @@ public class Game implements Serializable
 
     private void reset(){
         player.setScore(0);
-        gameBoard = new GameBoard();
+        gameBoard = new Board();
         round = 1;
         moves = 3;
         exit = false;
@@ -213,9 +213,9 @@ public class Game implements Serializable
         }
     }
 
-    private Block createRandomBlock(GameMode gamemode){
+    private Block createRandomBlock(Mode gamemode){
         Block block = null;
-        if(gamemode == GameMode.BASIC){
+        if(gamemode == Mode.BASIC){
             int randomNumber = random.nextInt(7) + 1;
             switch(randomNumber){
                 case 1: block = new IBlock();break;
@@ -255,7 +255,7 @@ public class Game implements Serializable
         }
     }
 
-    private void createPlayableBlocks(GameMode gamemode){
+    private void createPlayableBlocks(Mode gamemode){
         Arrays.setAll(playableBlocks, i -> createRandomBlock(gamemode));
         Arrays.stream(playableBlocks, 0, 3).forEach(this::rotateBlock);
     }
@@ -315,7 +315,7 @@ public class Game implements Serializable
         return i;
     }
 
-    private void addPlacementPoints(GameMode mode) {
+    private void addPlacementPoints(Mode mode) {
         switch (mode) {
             case BASIC: player.addScore(1);break;
             case ADVANCED: player.addScore(2);break;
@@ -389,7 +389,7 @@ public class Game implements Serializable
     }
 
     private void loadTop10Scores() {
-        top10 = (GameScores) RWFile.loadData("TOP10.rnk");
+        top10 = (Scores) RWFile.loadData("TOP10.rnk");
     }
 
     private void load() {
@@ -422,11 +422,11 @@ public class Game implements Serializable
         return over;
     }
 
-    public GameScores getPersonalScores() {
+    public Scores getPersonalScores() {
         return personalScores;
     }
 
-    public GameBoard getGameBoard() {
+    public Board getGameBoard() {
         return gameBoard;
     }
 
@@ -434,7 +434,7 @@ public class Game implements Serializable
         return exit;
     }
 
-    public GameMode getGameMode() {
+    public Mode getGameMode() {
         return gameMode;
     }
 

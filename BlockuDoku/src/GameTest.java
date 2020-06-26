@@ -1,19 +1,19 @@
 import static org.junit.Assert.*;
 
 import BlockGame.Game;
-import GameAssets.GameBoard;
+import GameAssets.Board;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class GameTest {
 	private Game game;
-	private GameBoard board;
+	private Board board;
 	@Before
 	public void setUp()
 	{
 		game = new Game();
-		board = new GameBoard();
+		board = new Board();
 	}
 
 	@Test
