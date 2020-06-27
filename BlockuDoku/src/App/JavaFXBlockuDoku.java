@@ -1,5 +1,8 @@
 package App;
 
+import BlockGame.Game;
+import GameAssets.Score;
+import GameAssets.Scores;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 
@@ -28,7 +31,7 @@ public class JavaFXBlockuDoku extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
 
-        /*primaryStage.setOnCloseRequest((event) -> {
+        primaryStage.setOnCloseRequest((event) -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Blocku Docku");
             alert.setHeaderText("Quit game!");
@@ -40,7 +43,7 @@ public class JavaFXBlockuDoku extends Application {
             } else {
                 alert.close();
             }
-        });*/
+        });
     }
 
     /**

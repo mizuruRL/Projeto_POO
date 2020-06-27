@@ -1,6 +1,9 @@
 package App;
 
+import BlockGame.Game;
 import GameAssets.Player;
+import GameAssets.Score;
+import GameAssets.Scores;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -40,10 +43,12 @@ public class Menu extends StackPane {
     private Button btnBack;
     private Button btnNewBasicGameMode;
     private Button btnNewAdvancedGameMode;
+    private Game game;
 
     public Menu(String username) {
         player = new Player(username);
         lblUsernameFont = Font.loadFont("file:resources/fonts/Montserrat-Regular.ttf", 32);
+        game = new Game();
     }
 
     public void createContent(){
@@ -133,12 +138,14 @@ public class Menu extends StackPane {
 
         btnShowPersonalScores.setOnAction((event) -> {
             Stage primaryStage = new Stage();
-            Scene scene = new Scene(new PersonalScoresPane(), 300, 500);
+            Scene scene = new Scene(new PersonalScoresPane(game.getPersonalScores().getScores()), 300, 500);
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
             primaryStage.show();
             primaryStage.setX(50);
             primaryStage.setY(50);
+
+
         });
 
         return gameStart;
