@@ -200,4 +200,8 @@ public class Board implements Serializable {
             }
         }
     }
+
+    public boolean[][] getBoard() {
+        return board;
+    }
 }

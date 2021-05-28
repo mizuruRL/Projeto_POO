@@ -14,4 +14,5 @@ public class SBlock extends Block{
 		content[1][1] = true;
 		content[1][0] = true;
 	}
+
 }

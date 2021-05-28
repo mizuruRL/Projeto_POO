@@ -5,4 +5,6 @@ public class QEBlock extends Block{
 		setContent(new boolean[3][3]);
 		fillContent(true);
 	}
+
+
 }

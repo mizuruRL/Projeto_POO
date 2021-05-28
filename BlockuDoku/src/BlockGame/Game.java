@@ -31,6 +31,7 @@ public class Game implements Serializable
     private Player player;
     private int round;
     private int moves;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Default constructor of class Game. Initializes attributes with predetermined values.
@@ -50,6 +51,7 @@ public class Game implements Serializable
         newGame = true;
         round = 1;
         moves = 3;
+        values = new String[2];
     }
 
     /**
@@ -78,6 +80,10 @@ public class Game implements Serializable
         menu();
     }
 
+    public void setPlayer(Player p) {
+        player = p;
+    }
+
     private void menu(){
         System.out.println("1 – Start new game\n" +
                 "2 – Load game\n" +
@@ -91,7 +97,7 @@ public class Game implements Serializable
             switch(choice){
                 case "0": System.out.println("GoodBye!"); over = true;break;
                 case "1": newGame();menu();break;
-                case "2": load();menu();break;
+                case "2": load(player.getNickName());menu();break;
                 case "3": showPersonalScores();menu();break;
                 case "4": showRankings();menu();break;
                 default: System.out.println("Invalid Option");
@@ -118,7 +124,10 @@ public class Game implements Serializable
         }while(!choice.equals("1") && !choice.equals("2") && !choice.equals("0"));
     }
 
-    private void reset(){
+    /**
+     * Method that resets a game to 0.
+     */
+    public void reset(){
         player.setScore(0);
         gameBoard = new Board();
         round = 1;
@@ -140,6 +149,10 @@ public class Game implements Serializable
         System.out.println(String.format("Round: %d | User: %s | Score: %d", round, player.getNickName(), player.getScore()));
         gameBoard.show();
         printPlayableBlocks();
+    }
+
+    public String[] getValues() {
+        return values;
     }
 
     /**
@@ -197,19 +210,29 @@ public class Game implements Serializable
         System.out.println("Thanks for playing!");
     }
 
-    private void executeCommand(char pickedBlock, int locationX, char locationY){ // 'A', 1, 'A'
+    /**
+     * Method responsible for executing a block placement.
+     * @param pickedBlock Identifier of block
+     * @param locationX X coord of board to place block
+     * @param locationY Y coord of board to place block
+     * @return Boolean, true if executed, false if otherwise.
+     */
+    public boolean executeCommand(char pickedBlock, int locationX, char locationY){ // 'A', 1, 'A'
         if(Character.toUpperCase(pickedBlock) >= 'A' && Character.toUpperCase(pickedBlock) <= 'C'){
             if(Character.toUpperCase(locationY) >= 'A' && Character.toUpperCase(locationY) <= 'I'){
                 if(locationX >= 1 && locationX <= 9){
-                    makeMove(pickedBlock,locationX,locationY);
+                    return makeMove(pickedBlock,locationX,locationY);
                 }else{
                     System.out.println("Invalid Line position\n");
+                    return false;
                 }
             }else{
                 System.out.println("Invalid column position\n");
+                return false;
             }
         }else{
             System.out.println("Invalid block\n");
+            return false;
         }
     }
 
@@ -255,7 +278,11 @@ public class Game implements Serializable
         }
     }
 
-    private void createPlayableBlocks(Mode gamemode){
+    /**
+     * Method that fills the array of playable blocks, randomly, according to game mode.
+     * @param gamemode Mode to pick blocks from
+     */
+    public void createPlayableBlocks(Mode gamemode){
         Arrays.setAll(playableBlocks, i -> createRandomBlock(gamemode));
         Arrays.stream(playableBlocks, 0, 3).forEach(this::rotateBlock);
     }
@@ -288,7 +315,8 @@ public class Game implements Serializable
         return result;
     }
 
-    private void makeMove(char pickedBlock, int locationX, char locationY){ // 'A', 1, 'A';
+    public boolean makeMove(char pickedBlock, int locationX, char locationY){ // 'A', 1, 'A';
+        boolean result = false;
         int locationYIndex = Character.toUpperCase(locationY) - 'A'; // 0;
         int locationXIndex = locationX - 1; // 0
         int index = getIndexFromLetter(pickedBlock); // 0
@@ -301,11 +329,18 @@ public class Game implements Serializable
                 removeFromPlayableBlocks(index);
                 reduceMove();
                 addPlacementPoints(gameMode);
+                result = true;
             } else System.out.println("Block cannot be placed here");
         }
+        return result;
     }
 
-    private int getIndexFromLetter(char letter){
+    /**
+     * Method that returns the index based on the input character
+     * @param letter Character to check
+     * @return 1 = A; 2 = B; 3 = C; -1 = not found
+     */
+    public int getIndexFromLetter(char letter){
         int i = -1;
         switch (Character.toUpperCase(letter)) {
             case 'A': i = 0; break;
@@ -322,7 +357,11 @@ public class Game implements Serializable
         }
     }
 
-    private boolean checkPossibleMoves() {
+    /**
+     * Method responsible for checking if there are any moves left.
+     * @return Boolean, true if moves are possible, false if otherwise.
+     */
+    public boolean checkPossibleMoves() {
         int size = gameBoard.getSize();
         for (Block block : playableBlocks) {
             if (block != null) {
@@ -338,7 +377,10 @@ public class Game implements Serializable
         return false;
     }
 
-    private void checkForPoints(){
+    /**
+     * Method responsible for checking and giving points to the player.
+     */
+    public void checkForPoints(){
         for(int i = 0; i < gameBoard.getSize(); i++) {
             if(gameBoard.checkColumn(i)){
                 gameBoard.cleanColumn(i);
@@ -360,7 +402,10 @@ public class Game implements Serializable
         }
     }
 
-    private void newRound(){
+    /**
+     * Method responsible for starting a new round.
+     */
+    public void newRound(){
         moves = 3;
         round++;
         createPlayableBlocks(gameMode);
@@ -370,7 +415,10 @@ public class Game implements Serializable
         moves--;
     }
 
-    private void insertPersonalScore() {
+    /**
+     * Method responsible for inserting a score into the player's personal scores.
+     */
+    public void insertPersonalScore() {
         personalScores.insertScore(new Score(player));
     }
 
@@ -380,20 +428,32 @@ public class Game implements Serializable
         System.out.println("\n");
     }
 
-    private void saveTop10Scores() {
+    /**
+     * Method responsible for saving the top10 ranks onto a file.
+     */
+    public void saveTop10Scores() {
         RWFile.saveData("TOP10.rnk",top10);
     }
 
-    private void insertTop10Score() {
+    /**
+     * Method responsible for inserting a score into the top10 rankings.
+     */
+    public void insertTop10Score() {
         top10.insertScore(new Score(player));
     }
 
-    private void loadTop10Scores() {
+    /**
+     * Method responsible for loading the top10 rankings file.
+     */
+    public void loadTop10Scores() {
         top10 = (Scores) RWFile.loadData("TOP10.rnk");
+        if (top10 == null) {
+            top10 = new Scores();
+        }
     }
 
-    private void load() {
-        Game load = (Game) RWFile.loadData("saves/" + player.getNickName() + ".sav");
+    private boolean load(String username) {
+        Game load = (Game) RWFile.loadData("saves/" + username + ".sav");
         if(load != null) {
             player = load.getPlayer();
             gameBoard = load.getGameBoard();
@@ -405,8 +465,9 @@ public class Game implements Serializable
             gameMode = load.getGameMode();
             moves = load.getMoves();
             newGame = load.getNewGame();
-            play();
+            return true;
         }
+        return false;
     }
 
     private void save() {
@@ -452,6 +513,14 @@ public class Game implements Serializable
 
     public boolean getNewGame() {
         return newGame;
+    }
+
+    public Scores getTop10() {
+        return top10;
+    }
+
+    public void setGameMode(Mode gameMode) {
+        this.gameMode = gameMode;
     }
 }
 

@@ -1,6 +1,8 @@
 package App;
 
 import BlockGame.Game;
+import FileHandler.RWFile;
+import GameAssets.Mode;
 import GameAssets.Player;
 import GameAssets.Score;
 import GameAssets.Scores;
@@ -11,9 +13,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
@@ -25,11 +26,17 @@ import java.awt.*;
 import java.util.Optional;
 import java.util.Stack;
 
+/**
+ * Class responsible for displaying the main menu of the game.
+ *
+ * @author André Dias (190221068) e Tomás Barroso (190221029)
+ * @version 1.0
+ */
 public class Menu extends StackPane {
     private BorderPane gameStart;
     private BorderPane gameDifficultyMenu;
     private Label lblUsername;
-    private Player player;
+    private Game game;
     private Font lblUsernameFont;
     private GridPane startGameMenu;
     private GridPane gameDifficulty;
@@ -43,14 +50,20 @@ public class Menu extends StackPane {
     private Button btnBack;
     private Button btnNewBasicGameMode;
     private Button btnNewAdvancedGameMode;
-    private Game game;
 
-    public Menu(String username) {
-        player = new Player(username);
+    /**
+     * Constructor of class menu.
+     * @param game Game to keep in memory.
+     */
+    public Menu(Game game) {
+        this.game = game;
         lblUsernameFont = Font.loadFont("file:resources/fonts/Montserrat-Regular.ttf", 32);
-        game = new Game();
+
     }
 
+    /**
+     * Method responsible for creating the content to be displayed in the menu.
+     */
     public void createContent(){
         createGameMenu();
         createDifficultyMenu();
@@ -67,7 +80,7 @@ public class Menu extends StackPane {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Blocku Docku");
             alert.setHeaderText("Quit game!");
-            alert.setContentText("Are you sure you want to quit the game?");
+            alert.setContentText("Are you sure you want to quit the game?\nAny progress will not be saved.");
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
@@ -78,6 +91,10 @@ public class Menu extends StackPane {
         });
     }
 
+    /**
+     * Method responsible for creating the game menu.
+     * @return Game menu panel
+     */
     public BorderPane createGameMenu(){
         gameStart = new BorderPane();
         startGameMenu = new GridPane();
@@ -91,7 +108,7 @@ public class Menu extends StackPane {
         btnQuit = new Button("Quit");
 
         gameStart.setStyle("-fx-background-color: #A9F8FB");
-        lblUsername.setText("Hello "+ player.getNickName());
+        lblUsername.setText("Hello "+ game.getPlayer().getNickName());
         lblUsername.setFont(lblUsernameFont);
         lblUsername.setTextAlignment(TextAlignment.CENTER);
         lblUsername.setAlignment(Pos.TOP_CENTER);
@@ -144,13 +161,57 @@ public class Menu extends StackPane {
             primaryStage.show();
             primaryStage.setX(50);
             primaryStage.setY(50);
-
-
         });
+
+        btnShowRanking.setOnAction((event) -> {
+            game.loadTop10Scores();
+            if(game.getTop10() != null) {
+                Stage primaryStage = new Stage();
+                Scene scene = new Scene(new RankingPane(game.getTop10().getScores()), 300, 500);
+                primaryStage.setScene(scene);
+                primaryStage.setResizable(false);
+                primaryStage.show();
+                primaryStage.setX(50);
+                primaryStage.setY(50);
+            }else{
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Blocku Docku");
+                alert.setHeaderText("Error!");
+                alert.setContentText("There are no Top 10 scores");
+                alert.showAndWait();
+            }
+        });
+
+        btnLoadGame.setOnAction((event) -> {
+            TextInputDialog window = new TextInputDialog("User");
+            window.setTitle("Save Manager");
+            window.setHeaderText("Input the name of your save.\n(Your username only)");
+            Optional<String> resultado = window.showAndWait();
+            String username;
+            if(resultado.isPresent()) {
+                username = resultado.get();
+                Game load = (BlockGame.Game) RWFile.loadData("saves/" + username + ".sav");
+                if (load != null) {
+                    game = load;
+                    getChildren().remove(gameStart);
+                    getChildren().add(new GameBoard(game));
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Blocku Docku");
+                    alert.setHeaderText("Error!");
+                    alert.setContentText("There are no saves with this name!");
+                    alert.showAndWait();
+                }
+            }});
+
 
         return gameStart;
     }
 
+    /**
+     * Method responsible for creating the difficulty menu panels.
+     * @return Difficulty menu panel.
+     */
     public BorderPane createDifficultyMenu() {
         gameDifficultyMenu = new BorderPane();
         gameDifficulty = new GridPane();
@@ -194,6 +255,22 @@ public class Menu extends StackPane {
         hBBottom.getChildren().add(btnBack);
         hBBottom.setPadding(new Insets(0,0,5,5));
         gameDifficultyMenu.setBottom(hBBottom);
+
+        btnNewBasicGameMode.setOnAction((event) -> {
+            getChildren().remove(gameDifficultyMenu);
+            game.setGameMode(Mode.BASIC);
+            game.createPlayableBlocks(Mode.BASIC);
+            this.game.reset();
+            getChildren().add(new GameBoard(game));
+        });
+
+        btnNewAdvancedGameMode.setOnAction((event) -> {
+            getChildren().remove(gameDifficultyMenu);
+            game.setGameMode(Mode.ADVANCED);
+            game.createPlayableBlocks(Mode.ADVANCED);
+            this.game.reset();
+            getChildren().add(new GameBoard(game));
+        });
 
         return gameDifficultyMenu;
     }

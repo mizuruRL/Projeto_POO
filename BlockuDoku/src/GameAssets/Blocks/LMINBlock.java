@@ -8,4 +8,6 @@ public class LMINBlock extends Block{
 		content[1][0] = true;
 		content[1][1] = true;
 	}
+
+
 }

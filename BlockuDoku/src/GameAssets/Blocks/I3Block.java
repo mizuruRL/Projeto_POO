@@ -5,4 +5,6 @@ public class I3Block extends Block{
 		setContent(new boolean[3][1]);
 		fillContent(true);
 	}
+
+
 }

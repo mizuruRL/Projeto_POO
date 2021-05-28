@@ -5,4 +5,6 @@ public class I2Block extends Block{
 		setContent(new boolean[2][1]);
 		fillContent(true);
 	}
+
+
 }

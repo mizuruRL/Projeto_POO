@@ -17,8 +17,10 @@ import javafx.stage.WindowEvent;
 import java.util.Optional;
 
 /**
+ * Class responsible for starting the JFX app
  *
- * @author rcneves
+ * @author André Dias (190221068) e Tomás Barroso (190221029)
+ * @version 1.0
  */
 public class JavaFXBlockuDoku extends Application {
     App.Welcome welcome = new App.Welcome();

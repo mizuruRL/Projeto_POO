@@ -14,4 +14,6 @@ public class LBlock extends Block{
 		content[2][0] = true;
 		content[2][1] = true;
 	}
+
+
 }

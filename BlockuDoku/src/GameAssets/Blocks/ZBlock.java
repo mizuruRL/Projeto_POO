@@ -14,4 +14,5 @@ public class ZBlock extends Block{
 		content[1][1] = true;
 		content[1][2] = true;
 	}
+
 }

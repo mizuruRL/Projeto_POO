@@ -4,6 +4,8 @@
  */
 package App;
 
+import BlockGame.Game;
+import GameAssets.Player;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
@@ -21,8 +23,10 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
 /**
+ * Class responsible for displaying the Welcome panel.
  *
- * @author rcneves
+ * @author André Dias (190221068) e Tomás Barroso (190221029)
+ * @version 1.0
  */
 public class Welcome extends StackPane {
     private BorderPane borderPane;
@@ -36,7 +40,12 @@ public class Welcome extends StackPane {
     private TextField txtFieldUsername;
     private Menu menu;
     private Alert alert;
+    private Game game;
+    private Player player;
 
+    /**
+     * Default constructor of Welcome class.
+     */
     public Welcome() {
         borderPane = new BorderPane();
         btn = new Button("Continue");
@@ -50,14 +59,20 @@ public class Welcome extends StackPane {
         txtFieldUsername = new TextField();
     }
 
+    /**
+     * Method that creates the content to be displayed on the welcome panel.
+     */
     public void createContent(){
 
 
         btn.setOnAction((event) -> {
 
             if(!txtFieldUsername.getText().isEmpty()) {
+                player = new Player(txtFieldUsername.getText());
+                game = new Game();
+                game.setPlayer(player);
                 getChildren().remove(borderPane);
-                menu = new Menu(txtFieldUsername.getText());
+                menu = new Menu(game);
                 menu.createContent();
                 getChildren().add(menu);
             }else{

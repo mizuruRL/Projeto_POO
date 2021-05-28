@@ -10,4 +10,6 @@ public class QBlock extends Block{
 		setContent(new boolean[2][2]);
 		fillContent(true);
 	}
+
+
 }

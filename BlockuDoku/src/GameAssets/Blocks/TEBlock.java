@@ -10,4 +10,6 @@ public class TEBlock extends Block{
 		content[1][1] = true;
 		content[2][1] = true;
 	}
+
+
 }

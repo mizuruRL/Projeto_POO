@@ -10,4 +10,6 @@ public class LMAXBlock extends Block{
 		content[2][1] = true;
 		content[2][2] = true;
 	}
+
+
 }
